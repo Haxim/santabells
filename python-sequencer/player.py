@@ -17,6 +17,8 @@ parser.add_argument('-t', '--transpose', type=int, default=0,
                     help='number of steps to transpose song')
 parser.add_argument('-b', '--beep', action='store_true',
                     help='beep instead of ring')
+parser.add_argument('-r', '--ring', action='store_true',
+                    help='beep instead of ring')
 parser.add_argument('filename', help='type 0 midi file to play')
 args = parser.parse_args()
 
@@ -43,7 +45,7 @@ if args.beep:
                         '192.168.53.43',
                         '192.168.53.40',
                         '192.168.53.44'], args.transpose)
-else:
+elif args.ring:
     #inst = santas.Ring({'beep8C4AAD.local': (81, 83),
     #                    'beep94EC03.local': (85, 86),
     #                    'beep8C4B01.local': (88, 90),
@@ -54,6 +56,10 @@ else:
                         '192.168.53.43': (88, 90),
                         '192.168.53.40': (92, 93),
                         '192.168.53.44': (95, 97)}, args.transpose)
+else:
+     inst = santas.Swing(args.transpose)
+
+
 eTime = time.time()
 for track in pattern:
     for event in track:
